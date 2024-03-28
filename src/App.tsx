@@ -1,14 +1,11 @@
 import "./App.css";
+import CounterDemo from "./components/CounterDemo";
 import DemoComponent from "./components/DemoComponent";
 
 const App = () => {
   return (
     <div>
-      <p>hello</p>
-      <DemoComponent title="title"></DemoComponent>
-      <DemoComponent>
-        <p>mon super texte trop bien</p>
-      </DemoComponent>
+      <CounterDemo></CounterDemo>
     </div>
   );
 };
