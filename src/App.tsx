@@ -1,11 +1,11 @@
+import { RouterProvider } from "react-router-dom";
 import "./App.css";
-import CounterDemo from "./components/CounterDemo";
-import DemoComponent from "./components/DemoComponent";
+import router from "./router/router";
 
 const App = () => {
   return (
     <>
-      <CounterDemo></CounterDemo>
+      <RouterProvider router={router}></RouterProvider>
     </>
   );
 };

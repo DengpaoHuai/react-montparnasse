@@ -24,7 +24,7 @@ type PlanetRequest = {
   results: Planet[];
 };
 
-const CounterDemo = () => {
+const PlanetsListPage = () => {
   const [planets, setPlanets] = useState<PlanetRequest>({
     count: 0,
     next: "",
@@ -75,4 +75,4 @@ const CounterDemo = () => {
   );
 };
 
-export default CounterDemo;
+export default PlanetsListPage;
