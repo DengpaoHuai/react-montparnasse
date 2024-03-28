@@ -17,26 +17,36 @@ type Planet = {
   url: string;
 };
 
-type Planets = Planet[];
+type PlanetRequest = {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: Planet[];
+};
 
 const CounterDemo = () => {
-  const [planets, setPlanets] = useState<Planets>([]);
+  const [planets, setPlanets] = useState<PlanetRequest>({
+    count: 0,
+    next: "",
+    previous: "",
+    results: [],
+  });
 
-  const fetchPlanets = async () => {
-    const response = await fetch("https://swapi.dev/api/planets/");
+  const fetchPlanets = async (url: string) => {
+    const response = await fetch(url);
     const data = await response.json();
     console.log(data);
-    setPlanets(data.results);
+    setPlanets(data);
   };
 
   useEffect(() => {
-    fetchPlanets();
+    fetchPlanets("https://swapi.dev/api/planets/");
   }, []);
 
   return (
     <>
       <h1>Planets</h1>
-      {planets.map((planet) => {
+      {planets.results.map((planet) => {
         return (
           <Fragment key={planet.url}>
             <h2>{planet.name}</h2>
@@ -44,6 +54,23 @@ const CounterDemo = () => {
           </Fragment>
         );
       })}
+      <button
+        disabled={!planets.next}
+        onClick={() => {
+          planets.next && fetchPlanets(planets.next);
+        }}
+      >
+        next Planets
+      </button>
+
+      <button
+        disabled={!planets.previous}
+        onClick={() => {
+          planets.previous && fetchPlanets(planets.previous);
+        }}
+      >
+        Previous Planets
+      </button>
     </>
   );
 };
