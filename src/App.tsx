@@ -4,9 +4,9 @@ import DemoComponent from "./components/DemoComponent";
 
 const App = () => {
   return (
-    <div>
+    <>
       <CounterDemo></CounterDemo>
-    </div>
+    </>
   );
 };
 

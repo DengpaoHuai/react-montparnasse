@@ -1,34 +1,50 @@
-import { MouseEvent, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
+
+type Planet = {
+  name: string;
+  rotation_period: string;
+  orbital_period: string;
+  diameter: string;
+  climate: string;
+  gravity: string;
+  terrain: string;
+  surface_water: string;
+  population: string;
+  residents: string[];
+  films: string[];
+  created: string;
+  edited: string;
+  url: string;
+};
+
+type Planets = Planet[];
 
 const CounterDemo = () => {
-  let count = 0;
-  const [counter, setCounter] = useState(0);
-  console.log(counter);
-  console.log("render");
+  const [planets, setPlanets] = useState<Planets>([]);
+
+  const fetchPlanets = async () => {
+    const response = await fetch("https://swapi.dev/api/planets/");
+    const data = await response.json();
+    console.log(data);
+    setPlanets(data.results);
+  };
+
+  useEffect(() => {
+    fetchPlanets();
+  }, []);
 
   return (
-    <div>
-      <p>ma valeur : {counter}</p>
-      <p>Count: {count}</p>
-
-      <button
-        onClick={() => {
-          count++;
-          console.log(count);
-        }}
-      >
-        Increment let
-      </button>
-
-      <button
-        onClick={() => {
-          setCounter(counter + 1);
-          console.log(counter);
-        }}
-      >
-        Increment useState
-      </button>
-    </div>
+    <>
+      <h1>Planets</h1>
+      {planets.map((planet) => {
+        return (
+          <Fragment key={planet.url}>
+            <h2>{planet.name}</h2>
+            <p>{planet.population}</p>
+          </Fragment>
+        );
+      })}
+    </>
   );
 };
 
