@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import useFetch from "../hooks/useFetch";
 
 type Movie = {
   _id: string;

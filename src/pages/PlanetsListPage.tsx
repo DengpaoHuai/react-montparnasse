@@ -1,4 +1,6 @@
+import { useQuery } from "@tanstack/react-query";
 import { Fragment, useEffect, useState } from "react";
+import { fetchPlanets } from "../services/planet.service";
 
 type Planet = {
   name: string;
@@ -25,28 +27,21 @@ type PlanetRequest = {
 };
 
 const PlanetsListPage = () => {
-  const [planets, setPlanets] = useState<PlanetRequest>({
-    count: 0,
-    next: "",
-    previous: "",
-    results: [],
+  const [page, setPage] = useState<number>(1);
+  const { data: planets, isLoading } = useQuery<PlanetRequest>({
+    queryKey: ["planets", page],
+    queryFn: () => fetchPlanets(page),
+    staleTime: 5000,
   });
 
-  const fetchPlanets = async (url: string) => {
-    const response = await fetch(url);
-    const data = await response.json();
-    console.log(data);
-    setPlanets(data);
-  };
-
-  useEffect(() => {
-    fetchPlanets("https://swapi.dev/api/planets/");
-  }, []);
+  if (isLoading) {
+    return <h1>Loading...</h1>;
+  }
 
   return (
     <>
       <h1>Planets</h1>
-      {planets.results.map((planet) => {
+      {planets?.results.map((planet) => {
         return (
           <Fragment key={planet.url}>
             <h2>{planet.name}</h2>
@@ -55,18 +50,18 @@ const PlanetsListPage = () => {
         );
       })}
       <button
-        disabled={!planets.next}
+        disabled={!planets?.next}
         onClick={() => {
-          planets.next && fetchPlanets(planets.next);
+          setPage(page + 1);
         }}
       >
         next Planets
       </button>
 
       <button
-        disabled={!planets.previous}
+        disabled={!planets?.previous}
         onClick={() => {
-          planets.previous && fetchPlanets(planets.previous);
+          setPage(page - 1);
         }}
       >
         Previous Planets

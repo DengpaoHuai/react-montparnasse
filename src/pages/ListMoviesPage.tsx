@@ -11,14 +11,6 @@ const ListMoviesPage = () => {
     "https://crudcrud.com/api/a1ab6062db1f4a9aa8466994dbf7d53e/movies"
   );
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error</div>;
-  }
-
   return (
     <div>
       {data?.map((movie) => (

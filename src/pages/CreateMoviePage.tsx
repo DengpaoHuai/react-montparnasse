@@ -1,3 +1,4 @@
+import { useSnackbar } from "notistack";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
@@ -14,6 +15,7 @@ const CreateMoviePage = () => {
     formState: { errors },
   } = useForm<Inputs>();
   const navigate = useNavigate();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     console.log(data);
@@ -25,6 +27,7 @@ const CreateMoviePage = () => {
       body: JSON.stringify(data),
     })
       .then(() => {
+        enqueueSnackbar("Movie created successfully", { variant: "success" });
         navigate("/list_movies");
       })
       .catch((error) => {
