@@ -3,6 +3,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addMovie } from "../store/slices/movies.slice";
+import { createMovie } from "../store/actions/movies.actions";
+import { useAppDispatch } from "../store/store";
 
 type Inputs = {
   title: string;
@@ -18,25 +20,13 @@ const CreateMoviePage = () => {
   } = useForm<Inputs>();
   const navigate = useNavigate();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    fetch("https://crudcrud.com/api/28dcf3ecd96b4eda90ba670f0acf31d2/movies", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((result) => {
-        enqueueSnackbar("Movie created successfully", { variant: "success" });
-        dispatch(addMovie(result));
-        navigate("/list_movies");
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    dispatch(createMovie(data)).then(() => {
+      enqueueSnackbar("Movie created", { variant: "success" });
+      navigate("/list_movies");
+    });
   };
 
   return (

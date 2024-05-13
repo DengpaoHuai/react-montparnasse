@@ -1,8 +1,10 @@
 import { Fragment, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { removeMovieById } from "../store/slices/movies.slice";
 import { RootState, useAppDispatch } from "../store/store";
-import { setAllMovies } from "../store/actions/movies.actions";
+import {
+  setAllMovies,
+  deleteMovieById as ouioui,
+} from "../store/actions/movies.actions";
 
 const ListMoviesPage = () => {
   const dispatch = useAppDispatch();
@@ -13,16 +15,7 @@ const ListMoviesPage = () => {
   }, []);
 
   const deleteMovieById = async (id: string) => {
-    const response = await fetch(
-      `https://crudcrud.com/api/28dcf3ecd96b4eda90ba670f0acf31d2/movies/${id}`,
-      {
-        method: "DELETE",
-      }
-    );
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-    dispatch(removeMovieById(id));
+    dispatch(ouioui(id));
   };
 
   return (
