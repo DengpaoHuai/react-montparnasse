@@ -1,5 +1,5 @@
 import { Movie } from "../types/movie.type";
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setAllMovies } from "../store/slices/movies.slice";
 import { RootState } from "../store/store";
@@ -26,9 +26,12 @@ const ListMoviesPage = () => {
 
   return (
     <div className="test">
-      {/*data?.map((movie) => (
-        <div key={movie._id}>{movie.title}</div>
-      ))*/}
+      {state?.map((movie) => (
+        <Fragment key={movie._id}>
+          <div>{movie.title}</div>
+          <button onClick={() => {}}>delete</button>
+        </Fragment>
+      ))}
     </div>
   );
 };
