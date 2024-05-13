@@ -2,6 +2,7 @@ import { useSnackbar } from "notistack";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { addMovie } from "../store/slices/movies.slice";
 
 type Inputs = {
   title: string;
@@ -27,10 +28,11 @@ const CreateMoviePage = () => {
       },
       body: JSON.stringify(data),
     })
-      .then(() => {
+      .then((response) => response.json())
+      .then((result) => {
         enqueueSnackbar("Movie created successfully", { variant: "success" });
-
-        //navigate("/list_movies");
+        dispatch(addMovie(result));
+        navigate("/list_movies");
       })
       .catch((error) => {
         console.error("Error:", error);

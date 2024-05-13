@@ -1,10 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
-import useFetch from "../hooks/useFetch";
 import { Movie } from "../types/movie.type";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setAllMovies } from "../store/actions/movies.actions";
-import { StoreState } from "../store/store";
+import { setAllMovies } from "../store/slices/movies.slice";
+import { RootState } from "../store/store";
 
 const fetchMovies = async () => {
   const response = await fetch(
@@ -18,7 +16,7 @@ const fetchMovies = async () => {
 
 const ListMoviesPage = () => {
   const dispatch = useDispatch();
-  const state = useSelector((state: StoreState) => state.movies);
+  const state = useSelector((state: RootState) => state.movies);
   console.log(state);
   useEffect(() => {
     fetchMovies().then((movies: Movie[]) => {

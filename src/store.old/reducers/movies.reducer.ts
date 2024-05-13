@@ -1,5 +1,5 @@
 import { Movie } from "../../types/movie.type";
-import { SET_ALL_MOVIES } from "../actions/movies.actions";
+import { ADD_MOVIE, SET_ALL_MOVIES } from "../actions/movies.actions";
 
 type ReducerState = {
   movies: Movie[];
@@ -23,8 +23,11 @@ const movieReducer = (state = initialState, action: MovieAction) => {
         ...state,
         movies: action.payload,
       };
-      break;
-
+    case ADD_MOVIE:
+      return {
+        ...state,
+        movies: [...state.movies, action.payload],
+      };
     default:
       return state;
   }
