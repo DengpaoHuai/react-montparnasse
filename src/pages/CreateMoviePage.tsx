@@ -21,7 +21,7 @@ const CreateMoviePage = () => {
   const dispatch = useDispatch();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    fetch("https://crudcrud.com/api/36ec3ec686374083acbeb86be9a13583/movies", {
+    fetch("https://crudcrud.com/api/28dcf3ecd96b4eda90ba670f0acf31d2/movies", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
