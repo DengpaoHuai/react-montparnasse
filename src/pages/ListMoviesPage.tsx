@@ -1,9 +1,9 @@
 import { Fragment, useContext } from "react";
-import { MoviesContext } from "../contexts/MoviesContextProvider";
 import { Link } from "react-router-dom";
+import useMovies from "../zustand/useMovies";
 
 const ListMoviesPage = () => {
-  const { movies } = useContext(MoviesContext);
+  const { movies } = useMovies();
   return (
     <div className="test">
       {movies?.map((movie) => (

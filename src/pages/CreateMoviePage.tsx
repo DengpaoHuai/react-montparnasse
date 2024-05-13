@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { addMovie } from "../store/slices/movies.slice";
 import { createMovie } from "../store/actions/movies.actions";
 import { useAppDispatch } from "../store/store";
+import { useMovies } from "../contexts/MoviesContextProvider";
 
 type Inputs = {
   title: string;
@@ -19,13 +20,13 @@ const CreateMoviePage = () => {
     formState: { errors },
   } = useForm<Inputs>();
   const navigate = useNavigate();
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const dispatch = useAppDispatch();
+  const { enqueueSnackbar } = useSnackbar();
+  const { createMovie } = useMovies();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    dispatch(createMovie(data)).then(() => {
+    createMovie(data).then(() => {
       enqueueSnackbar("Movie created", { variant: "success" });
-      navigate("/list_movies");
+      navigate("/");
     });
   };
 
