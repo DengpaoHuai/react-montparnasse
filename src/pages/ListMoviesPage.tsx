@@ -1,37 +1,24 @@
-import { Fragment, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { RootState, useAppDispatch } from "../store/store";
-import {
-  setAllMovies,
-  deleteMovieById as ouioui,
-} from "../store/actions/movies.actions";
+import { Fragment, useContext } from "react";
+import { MoviesContext } from "../contexts/MoviesContextProvider";
+import { Link } from "react-router-dom";
 
 const ListMoviesPage = () => {
-  const dispatch = useAppDispatch();
-  const state = useSelector((state: RootState) => state.movies);
-
-  useEffect(() => {
-    dispatch(setAllMovies());
-  }, []);
-
-  const deleteMovieById = async (id: string) => {
-    dispatch(ouioui(id));
-  };
-
+  const { movies } = useContext(MoviesContext);
   return (
     <div className="test">
-      {state?.map((movie) => (
+      {movies?.map((movie) => (
         <Fragment key={movie._id}>
           <div>{movie.title}</div>
           <button
             onClick={() => {
-              deleteMovieById(movie._id);
+              //deleteMovieById(movie._id);
             }}
           >
             delete
           </button>
         </Fragment>
       ))}
+      <Link to="/create_movie">Créer un film</Link>
     </div>
   );
 };

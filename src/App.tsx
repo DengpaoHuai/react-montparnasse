@@ -5,6 +5,7 @@ import { SnackbarProvider } from "notistack";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Provider } from "react-redux";
 import store from "./store/store";
+import MoviesContextProvider from "./contexts/MoviesContextProvider";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -17,13 +18,15 @@ const queryClient = new QueryClient({
 const App = () => {
   return (
     <>
-      <Provider store={store}>
-        <QueryClientProvider client={queryClient}>
-          <SnackbarProvider>
-            <RouterProvider router={router}></RouterProvider>
-          </SnackbarProvider>
-        </QueryClientProvider>
-      </Provider>
+      <MoviesContextProvider>
+        <Provider store={store}>
+          <QueryClientProvider client={queryClient}>
+            <SnackbarProvider>
+              <RouterProvider router={router}></RouterProvider>
+            </SnackbarProvider>
+          </QueryClientProvider>
+        </Provider>
+      </MoviesContextProvider>
     </>
   );
 };
