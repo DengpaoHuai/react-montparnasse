@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import useMovies from "../zustand/useMovies";
 
 const ListMoviesPage = () => {
-  const { movies } = useMovies();
+  const { movies, deleteMovie } = useMovies();
   return (
     <div className="test">
       {movies?.map((movie) => (
@@ -11,7 +11,7 @@ const ListMoviesPage = () => {
           <div>{movie.title}</div>
           <button
             onClick={() => {
-              //deleteMovieById(movie._id);
+              deleteMovie(movie._id);
             }}
           >
             delete

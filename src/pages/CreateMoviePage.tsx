@@ -1,11 +1,7 @@
 import { useSnackbar } from "notistack";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { addMovie } from "../store/slices/movies.slice";
-import { createMovie } from "../store/actions/movies.actions";
-import { useAppDispatch } from "../store/store";
-import { useMovies } from "../contexts/MoviesContextProvider";
+import useMovies from "../zustand/useMovies";
 
 type Inputs = {
   title: string;
@@ -21,10 +17,10 @@ const CreateMoviePage = () => {
   } = useForm<Inputs>();
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
-  const { createMovie } = useMovies();
+  const { addMovie } = useMovies();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    createMovie(data).then(() => {
+    addMovie(data).then(() => {
       enqueueSnackbar("Movie created", { variant: "success" });
       navigate("/");
     });
